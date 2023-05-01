@@ -1,0 +1,35 @@
+﻿@model CatalogItem
+
+@*<div class="filter @Model.FruitType.Type.Replace(' ','_')">*@
+
+    <form>
+
+        <img class="esh-catalog-thumbnail" src="@Model.PictureUrl" />
+
+        <div class="row">
+            <div class=" col-5  h2">
+            <span>@Model.Name</span>
+        </div>
+        <div class=" col esh-catalog-price">
+            <span>@Model.Price.ToString("N2")</span>
+        </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <span class="badge p-2 border w-100" style="background-color:lavenderblush">@Model.FruitType.Type</span>
+            </div>
+            <div class="col-6 border-0">
+                <span class="badge p-2 border w-100" style="background-color:aliceblue">@Model.FruitSort.Sort</span>
+            </div>
+        </div>
+        <div class="col-12 p-1">
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark form-control btn-sm p-2" style="height:40px">View Details</a>
+        </div>
+        <input type="hidden" asp-for="@Model.Id" name="id" />
+    </form>
+
+@*</div>*@
+   
+
+

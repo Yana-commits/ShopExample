@@ -1,0 +1,10 @@
+global using Xunit;
+global using AutoMapper;
+global using FruitShop.Host.Services.Interfaces;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using FluentAssertions;
+global using Order.Host.Repositories.Interfaces;
+global using Order.Host.Services.Interfaces;
+global using Order.Host.Services;

@@ -1,0 +1,13 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Threading.Tasks;
+global using AutoMapper;
+global using FluentAssertions;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using Xunit;
+global using FruitShop.Host.Data;
+global using FruitShop.Host.Repositories.Interfaces;
+global using FruitShop.Host.Services;
+global using FruitShop.Host.Services.Interfaces;
