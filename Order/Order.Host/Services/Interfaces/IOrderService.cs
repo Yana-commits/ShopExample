@@ -10,7 +10,6 @@ namespace Order.Host.Services.Interfaces
         public Task<BasketResponse<Orders>> GetUserOrders(string userId, int pageIndex, int pageSize);
         public Task<bool> UpdateStatus(int id, string status);
         public Task<bool> Delete(int id);
-        public Task<object> TestToBasket();
-        public Task<BasketResponse<BasketItem>> MakeOrder(string basketId);
+        
     }
 }

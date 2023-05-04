@@ -127,25 +127,6 @@ namespace Order.Host.Services
                 return true;
             });
         }
-        public async Task<object> TestToBasket()
-        {
-           var result = await _httpClient.SendAsync<object, object>($"{_settings.Value.BasketUrl}/testmethod",
-            HttpMethod.Post,
-            new { }
-            );
-            return result;
-        }
-        public async Task<BasketResponse<BasketItem>> MakeOrder(string basketId)
-        {
-            var result = await _httpClient.SendAsync<BasketResponse<BasketItem>, GetByIdRequest>($"{_settings.Value.BasketUrl}/getbyid",
-            HttpMethod.Post,
-            new GetByIdRequest()
-            {
-                Id = basketId,
-            }
-            );
-
-            return result;
-        }
+       
     }
 }

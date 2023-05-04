@@ -51,11 +51,11 @@
                         <div class="col-12 col-md-6 ">
                             @if (Model.ExistsInCart)
                             {
-                            <a asp-action="RemoveFromBasket"  asp-route-id="@Model.CatalogItem.Id" class="btn btn-warning btn-square form-control btn-lg" style="height:50px;">Remove from cart</a>
+                            <a asp-controller="Basket" asp-action="RemoveFromBasket"  asp-route-id="@Model.CatalogItem.Id" class="btn btn-warning btn-square form-control btn-lg" style="height:50px;">Remove from cart</a>
                             }
                             else
                             {
-                            <a asp-action="AddToBasket"  asp-all-route-data="parms" class="btn btn-warning btn-square form-control btn-lg" style="height:50px;">Add to cart</a>
+                            <a asp-controller="Basket" asp-action="AddToBasket"  asp-all-route-data="parms" class="btn btn-warning btn-square form-control btn-lg" style="height:50px;">Add to cart</a>
                             }
                         </div>
                     </div>

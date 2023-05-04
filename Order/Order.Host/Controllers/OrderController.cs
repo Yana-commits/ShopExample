@@ -71,23 +71,6 @@ namespace Order.Host.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [ProducesResponseType(typeof(int?), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> TestToBasket()
-        {
-            await _service.TestToBasket();
-            return Ok();
-        }
-
-        [HttpPost]
-        [ProducesResponseType(typeof(BasketResponse<BasketItem>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> MakeOrder()
-        {
-            var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
-            //var basketId = "18872";
-            var result = await _service.MakeOrder(basketId);
-
-            return Ok(result);
-        }
+       
     }
 }

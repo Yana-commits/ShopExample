@@ -9,11 +9,13 @@ namespace MVC.Controllers;
 public class CatalogController : Controller
 {
     private readonly ICatalogService _catalogService;
+    private readonly IBasketService _basketService;
     private readonly ILogger<CatalogController> _logger;
-    public CatalogController(ICatalogService catalogService, ILogger<CatalogController> logger)
+    public CatalogController(ICatalogService catalogService, ILogger<CatalogController> logger, IBasketService basketService)
     {
         _catalogService = catalogService;
         _logger = logger;
+        _basketService = basketService;
     }
 
     public async Task<IActionResult> Index(int? brandFilterApplied, int? typesFilterApplied, int? page, int? itemsPage)
@@ -59,35 +61,10 @@ public class CatalogController : Controller
             ExistsInCart = false
         };
 
-        var existsInCart = await _catalogService.IsInBasket(new IsInBasketRequest() { Id = id }) ;
+        var existsInCart = await _basketService.IsInBasket(new IsInBasketRequest() { Id = id }) ;
         
         detailsVM.ExistsInCart = existsInCart;
 
         return View(detailsVM);
-    }
-
-    public async Task<IActionResult> AddToBasket(int id,string name, decimal price)
-    {
-        var addItemRequest =  new AddItemRequest()
-        {
-            Id = id,
-            Name = name,
-            Price = price
-        };
-
-        await _catalogService.AddItemToBasket(addItemRequest);
-        _logger.LogWarning($"Add to basket");
-        return RedirectToAction(nameof(Index));
-    }
-    public async Task<IActionResult> RemoveFromBasket(int id)
-    {
-        var removeItemRequest = new RemoveItemRequest()
-        {
-            Id = id
-        };
-
-        await _catalogService.RemoveFromBasket(removeItemRequest);
-        _logger.LogWarning($"remove from basket");
-        return RedirectToAction(nameof(Index));
-    }
+    } 
 }
