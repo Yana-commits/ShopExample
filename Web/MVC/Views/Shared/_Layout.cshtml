@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using MVC.Models.Requests
+@using MVC.Services.Interfaces
+@inject IBasketService _basketService
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,10 +34,22 @@
             <article class="row">
 
                 <section class="col-lg-7 col-md-6 col-12">
-                    <a class="navbar-brand" routerLink="catalog">
-                        <a asp-area="" asp-controller="Catalog" asp-action="Index">
-                            
-                        </a>
+                    <a class="navbar-brand" routerLink="basket">
+
+                        @{
+                          var result =  await _basketService.GetFromBasket();
+                            if (result != null)
+                            {
+                                <a asp-area="" asp-controller="Basket" asp-action="GetItemsFromBasket">
+                                    <img src="~/images/cart.png" /> @result.BasketList.Count
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="~/images/cart-inoperative.png" /> 
+                            }
+                        }
+
                     </a>
                 </section>
 

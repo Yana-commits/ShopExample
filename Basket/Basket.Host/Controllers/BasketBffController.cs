@@ -27,7 +27,7 @@ namespace Basket.Host.Controllers
         }
 
         [HttpPost]
-       
+        
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddItemToBasket(BasketRequest data)
         {
@@ -50,7 +50,7 @@ namespace Basket.Host.Controllers
             return Ok();
         }
         [HttpPost]
-
+        [AllowAnonymous]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> TestMethod()
         {
@@ -62,15 +62,27 @@ namespace Basket.Host.Controllers
         }
 
         [HttpPost]
-       
-        [ProducesResponseType(typeof(BasketResponse<BasketItem>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetById(GetByIdRequest request)
+
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> TestMethod1()
         {
-            //var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+            var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+            //var basketId = "18872";
+            _logger.LogWarning($"you are in baasket {basketId}");
+
+            return Ok();
+        }
+
+        [HttpPost]
+        
+        [ProducesResponseType(typeof(BasketTotal), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetById()
+        {
+            var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
             //var basketId = "18872";
 
-            var result = await _basketService.GetFromBasket(request.Id);
-            _logger.LogWarning($"you are in baasket by id {request.Id}");
+            var result = await _basketService.GetFromBasket(basketId);
+            _logger.LogWarning($"you are in baasket by id {basketId}");
 
             if (result == null)
             {
@@ -78,11 +90,11 @@ namespace Basket.Host.Controllers
                 result = new BasketTotal();
             }
 
-            return Ok(new BasketResponse<BasketItem>() { TotalCost = result.TotalCost, BasketList = result.BasketList });
+            return Ok(result);
         }
 
         [HttpPost]
-        
+       
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> IsInBasket(IsItemInBasketRequest request)
         {

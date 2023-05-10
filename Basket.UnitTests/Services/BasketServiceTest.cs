@@ -24,6 +24,7 @@ namespace Basket.UnitTests.Services
         private string name = " ";
         private decimal price = 0;
         private decimal totalCoat = 0;
+        private string pic = "";
 
         private BasketTotal userBasket = new BasketTotal()
         {
@@ -64,7 +65,7 @@ namespace Basket.UnitTests.Services
                 .ReturnsAsync(userBasket);
 
             // Act
-            await _basketService.AddToBasket(It.IsAny<string>(), itemId, name, price);
+            await _basketService.AddToBasket(It.IsAny<string>(), itemId, name, price,pic);
 
             // assert
             _logger.Verify(
@@ -86,7 +87,7 @@ namespace Basket.UnitTests.Services
             _cacheService.Setup(s => s.GetAsync<BasketTotal>(It.IsAny<string>())).ReturnsAsync(test);
 
             // act
-            await _basketService.AddToBasket(It.IsAny<string>(), itemId, name, price);
+            await _basketService.AddToBasket(It.IsAny<string>(), itemId, name, price,pic);
 
             // assert
             _logger.Verify(

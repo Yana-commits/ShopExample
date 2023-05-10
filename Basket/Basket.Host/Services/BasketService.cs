@@ -30,7 +30,8 @@ namespace Basket.Host.Services
             {
                 Id = itemId,
                 Name = name,
-                Price = price,
+                Price = price
+
             };
 
             var result = await _cacheService.GetAsync<BasketTotal>(userId);

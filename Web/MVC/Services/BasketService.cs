@@ -1,4 +1,5 @@
-﻿using MVC.Models.Requests;
+﻿using MVC.Models;
+using MVC.Models.Requests;
 using MVC.Services.Interfaces;
 using System.Net.Http;
 
@@ -35,6 +36,22 @@ namespace MVC.Services
                isInBasketRequest);
 
             return result;
+        }
+        public async Task<BasketTotal> GetFromBasket()
+        {
+            var result = await _httpClient.SendAsync<BasketTotal, object>($"{_settings.Value.BasketUrl}/getbyid",
+                HttpMethod.Post,
+              new { });
+
+            return result;
+        }
+        public async Task GetFrom()
+        {
+            await _httpClient.SendAsync<object, object>($"{_settings.Value.BasketUrl}/testmethod",
+               HttpMethod.Post,
+             new { });
+
+            _logger.LogWarning("nu ok");
         }
     }
 }

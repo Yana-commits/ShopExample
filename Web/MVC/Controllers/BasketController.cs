@@ -8,15 +8,12 @@ namespace MVC.Controllers
     {
         private readonly IBasketService _basketService;
         private readonly ILogger<CatalogController> _logger;
-        public BasketController( ILogger<CatalogController> logger, IBasketService basketService)
+        public BasketController(ILogger<CatalogController> logger, IBasketService basketService)
         {
             _logger = logger;
             _basketService = basketService;
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+
         public async Task<IActionResult> AddToBasket(int id, string name, decimal price)
         {
             var addItemRequest = new AddItemRequest()
@@ -41,6 +38,19 @@ namespace MVC.Controllers
             _logger.LogWarning($"remove from basket");
             return RedirectToAction(nameof(CatalogController.Index), "Catalog");
         }
+
+        public async Task<IActionResult> GetItemsFromBasket()
+        {
+            var result = await _basketService.GetFromBasket();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            _logger.LogWarning($"{result.BasketList.Count} items in basket");
+
+            return View(result.BasketList);
+        }
+
     }
- 
+
 }
