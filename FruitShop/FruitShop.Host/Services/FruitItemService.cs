@@ -86,5 +86,15 @@ namespace FruitShop.Host.Services
                 return true;
             });
         }
+
+        public async Task<List<FruitItemDto>> GetFruitsByIdsAsync(List<int> ids)
+        {
+            return await ExecuteSafeAsync(async () =>
+            {
+                var result = await _fruitItemRepository.GetFruitsByIdsAsync(ids);
+                var catalogItem = result.Select(s => _mapper.Map<FruitItemDto>(s)).ToList();
+                return catalogItem;
+            });
+        }
     }
 }

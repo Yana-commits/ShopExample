@@ -9,5 +9,6 @@ namespace FruitShop.Host.Services.Interfaces
         Task<FruitItemDto?> GetFruitByIdASync(int id);
         Task<bool> UpdateDescriptionAsync(int id, string description);
         Task<bool> DeleteFruitItemAsync(int id);
+        Task<List<FruitItemDto>> GetFruitsByIdsAsync(List<int> ids);
     }
 }

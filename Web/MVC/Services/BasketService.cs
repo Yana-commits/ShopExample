@@ -45,9 +45,10 @@ namespace MVC.Services
 
             return result;
         }
-        public async Task GetFrom()
+       
+        public async Task MakeAnOrder()
         {
-            await _httpClient.SendAsync<object, object>($"{_settings.Value.BasketUrl}/testmethod",
+            await _httpClient.SendAsync<object, object>($"{_settings.Value.BasketUrl}/makeanorder",
                HttpMethod.Post,
              new { });
 

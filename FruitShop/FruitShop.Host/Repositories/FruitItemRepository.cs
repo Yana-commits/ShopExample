@@ -4,6 +4,7 @@ using FruitShop.Host.Models.Enums;
 using FruitShop.Host.Repositories.Interfaces;
 using FruitShop.Host.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace FruitShop.Host.Repositories
 {
@@ -123,6 +124,19 @@ namespace FruitShop.Host.Repositories
             var brands = await _dbContext.FruitTypeEntities.ToListAsync();
 
             return new FruitItemsByType<FruitTypeEntity>() { TotalCount = totalCount, Data = brands };
+        }
+
+        public async Task<List<FruitItemEntity>> GetFruitsByIdsAsync(List<int> ids)
+        {
+            var catalog = await _dbContext.FruitItemEntities.Where(u => ids.Contains(u.Id)).ToListAsync();
+
+            if (catalog == null)
+            {
+                _logger.LogWarning($"Not founded products with such ids");
+                return null!;
+            }
+
+            return catalog;
         }
     }
 }

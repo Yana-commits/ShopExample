@@ -8,6 +8,6 @@ namespace MVC.Services.Interfaces
         Task RemoveFromBasket(RemoveItemRequest removeItemRequest);
         Task<bool> IsInBasket(IsInBasketRequest isInBasketRequest);
         Task<BasketTotal> GetFromBasket();
-        Task GetFrom();
+        Task MakeAnOrder();
     }
 }

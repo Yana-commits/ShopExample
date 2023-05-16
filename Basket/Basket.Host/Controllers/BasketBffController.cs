@@ -108,9 +108,11 @@ namespace Basket.Host.Controllers
         [HttpPost]
        
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> MakeAnOrder(UserIdRequest request)
+        public async Task<IActionResult> MakeAnOrder()
         {
-            await _basketService.MakeAnOrder(request.UserId);
+            var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+
+            await _basketService.MakeAnOrder(basketId);
             return Ok();
         }
     }

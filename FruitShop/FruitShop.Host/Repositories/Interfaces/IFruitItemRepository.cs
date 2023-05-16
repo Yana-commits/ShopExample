@@ -15,5 +15,6 @@ namespace FruitShop.Host.Repositories.Interfaces
 
         Task<bool> DeleteFruitItemAsync(int id);
         Task<FruitItemsByType<FruitTypeEntity>> GetTypesAsync();
+        Task<List<FruitItemEntity>> GetFruitsByIdsAsync(List<int> ids);
     }
 }

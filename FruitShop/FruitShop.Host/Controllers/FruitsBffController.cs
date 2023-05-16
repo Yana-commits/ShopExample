@@ -65,5 +65,14 @@ namespace FruitShop.Host.Controllers
             var result = await _fruitCatalogService.GetTypesAsync();
             return Ok(result);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(GetCalogItemsByIdsResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetItemsByIds(GetItemsByIdsRequest request)
+        {
+            var result = await _fruitItemService.GetFruitsByIdsAsync(request.IdsList);
+            return Ok(new GetCalogItemsByIdsResponse() {Data = result});
+        }
     }
 }

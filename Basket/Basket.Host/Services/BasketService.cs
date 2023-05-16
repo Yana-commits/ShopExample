@@ -66,6 +66,7 @@ namespace Basket.Host.Services
             }
 
             result.BasketList.Remove(basketItem);
+            result.TotalCost -= basketItem.Price;
             await _cacheService.AddOrUpdateAsync(userId,result);
             _logger.LogInformation("Deleted Successfull");
 

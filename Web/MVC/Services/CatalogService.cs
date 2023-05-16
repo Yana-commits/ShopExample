@@ -72,5 +72,15 @@ public class CatalogService : ICatalogService
 
         return result;
     }
-   
+
+    public async Task<CatalogItemsByIds> GetItemsByIds(GetItemsByIdsRequest getItemsByIdsRequest)
+    {
+        var result = await _httpClient.SendAsync<CatalogItemsByIds, GetItemsByIdsRequest>($"{_settings.Value.FruitCatalogApi}/getitemsbyids",
+                  HttpMethod.Post,
+                  getItemsByIdsRequest);
+
+        return result;
+    }
+
+
 }

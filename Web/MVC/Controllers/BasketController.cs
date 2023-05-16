@@ -7,11 +7,13 @@ namespace MVC.Controllers
     public class BasketController : Controller
     {
         private readonly IBasketService _basketService;
+        private readonly ICatalogService _catalogService;
         private readonly ILogger<CatalogController> _logger;
-        public BasketController(ILogger<CatalogController> logger, IBasketService basketService)
+        public BasketController(ILogger<CatalogController> logger, IBasketService basketService, ICatalogService catalogService)
         {
             _logger = logger;
             _basketService = basketService;
+            _catalogService = catalogService;
         }
 
         public async Task<IActionResult> AddToBasket(int id, string name, decimal price)
@@ -44,13 +46,41 @@ namespace MVC.Controllers
             var result = await _basketService.GetFromBasket();
             if (result == null)
             {
+
                 return NotFound();
             }
             _logger.LogWarning($"{result.BasketList.Count} items in basket");
 
-            return View(result.BasketList);
-        }
+            List<int> prodInCart = result.BasketList.Select(i => i.Id).ToList();
 
+            var ItemResult = await _catalogService.GetItemsByIds(new GetItemsByIdsRequest() { IdsList = prodInCart });
+
+            return View(ItemResult);
+        }
+       
+        public async Task<IActionResult> Remove(int id)
+        {
+            var removeItemRequest = new RemoveItemRequest()
+            {
+                Id = id
+            };
+
+            await _basketService.RemoveFromBasket(removeItemRequest);
+            _logger.LogWarning($"remove from basket");
+
+            return RedirectToAction(nameof(GetItemsFromBasket));
+        }
+    
+        [HttpPost]
+        [ActionName("GetItemsFromBasket")]
+
+        public async Task<IActionResult> MakeAnOrder()
+        {
+            await _basketService.MakeAnOrder();
+           
+            _logger.LogWarning($"Make an Order");
+            return RedirectToAction(nameof(GetItemsFromBasket));
+        }
     }
 
 }
